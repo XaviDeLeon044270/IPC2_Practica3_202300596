@@ -3,7 +3,7 @@ from collections import defaultdict
 from datetime import datetime
 from xml.etree import ElementTree as ET
 from flask import Blueprint, jsonify, request
-from clases import Venta
+from clases import Venta, Departamento
 
 BlueprintVenta = Blueprint('venta', __name__)
 
@@ -12,6 +12,11 @@ departamentos_permitidos = [
     'Escuintla', 'Chimaltenango', 'Santa Rosa', 'Solola', 'Totonicapan', 'Zacapa', 'Chiquimula', 'Jalapa',
     'Izabal', 'El Progreso', 'Peten', 'Jutiapa', 'Baja Verapaz', 'Alta Verapaz', 'Retalhuleu'
 ]
+
+departamentos = []
+
+for departamento in departamentos_permitidos:
+    departamentos.append(Departamento(departamento, 0))
 
 @BlueprintVenta.route('/venta/cargar', methods=['POST'])
 def cargarVentas():
@@ -28,11 +33,9 @@ def cargarVentas():
         root = ET.fromstring(xml_entrada)
         #recorremos el root de ventas
         for venta in root:
-            #recorremos las etiquetas de la venta
-            for elemento in venta:
-                departamento = venta.get('departamento')
-                nueva_venta = Venta(departamento)
-                ventas.append(nueva_venta)
+            departamento = venta.get('departamento')
+            nueva_venta = Venta(departamento)
+            ventas.append(nueva_venta)
         # Guardamos la lista de ventas en el archivo xml
         crearXML(ventas)
         return jsonify({
@@ -57,23 +60,13 @@ def procesarVenta():
                 'status': 400
             }),400
         root = ET.fromstring(xml_entrada)
-        for elemento in root:
-            pass
-        nueva_venta = Venta(contador_ventas, fecha, hora, cliente)
-        nueva_venta.setProductos(productos)
-        ventas.append(nueva_venta)
-        total_nueva_venta = 0
-        for producto in nueva_venta.getProductos():
-            total_nueva_venta += producto.subtotal
+        for venta in root:
+            departamento_nombre = venta.get('departamento')
+            for departamento in departamentos:
+                if departamento.getNombre() == departamento_nombre:
+                    departamento.cantidadVentas += 1
+                    break
         crearXML(ventas)
-        xml_salida = '''<compra>
-    <nombre>'''+nueva_venta.cliente.nombre+'''</nombre>
-    <nit>'''+nueva_venta.cliente.nit+'''</nit>
-    <fecha>'''+str(nueva_venta.fecha)+'''</fecha>
-    <hora>'''+str(nueva_venta.hora)+'''</hora>
-    <total>'''+str(total_nueva_venta)+'''</total>
-</compra>
-'''
         return jsonify({
             'mensaje': 'Venta procesada',
             'xml': xml_salida,
