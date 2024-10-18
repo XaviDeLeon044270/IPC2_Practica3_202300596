@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<Resumen>
+    <ListadoVentas>
+        <Venta departamento="Texas">
+            <Fecha>14/10/2024</Fecha>
+        </Venta>
+        <Venta departamento="Florida">
+            <Fecha>02/10/2024</Fecha>
+        </Venta>
+        <Venta departamento="Jalapa">
+            <Fecha>19/10/2024</Fecha>
+        </Venta>
+    </ListadoVentas>
+</Resumen>

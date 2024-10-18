@@ -11,7 +11,7 @@
                 class="flex items-center space-x-4 mb-4"
                 method="POST"
                 enctype="multipart/form-data"
-                action="/closemessages1/"
+                action="/cerrarAlertsCarga/"
             >
             {% csrf_token %}
             <button class="absolute top-0 bottom-0 right-0 px-4 py-3">
@@ -28,7 +28,7 @@
                 class="flex items-center space-x-4 mb-4"
                 method="POST"
                 enctype="multipart/form-data"
-                action="/closemessages1/"
+                action="/cerrarAlertsCarga/"
             >
             {% csrf_token %}
             <button class="absolute top-0 bottom-0 right-0 px-4 py-3">
@@ -37,14 +37,14 @@
         </form>
     </div>
     {% endif %}
-    <h3 class="text-3xl font-medium text-gray-700">Cargar Datos</h3>
+    <h3 class="text-3xl font-medium text-black-700">Cargar Datos</h3>
     <div class="mt-4">
         <div class="flex justify-between w-full mb-10">
             <form 
                 class="flex items-center space-x-4 mb-4"
                 method="POST"
                 enctype="multipart/form-data"
-                action="/cargaxml/"
+                action="/cargarXML/"
             >
             {% csrf_token %}
                 <label for="file" class="px-6 py-2 bg-blue-500 text-white font-bold rounded hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75">
@@ -67,9 +67,9 @@
             </form>
         </div>
         {% if contenido_archivo %}
-            <textarea class="w-full p-10 border border-neutral-800 text-lg resize-none" rows="30" cols="50" readonly>{{contenido_archivo}}</textarea>
+            <textarea class="w-full p-10 border border-neutral-800 text-lg resize-none" rows="13" cols="50" readonly>{{contenido_archivo}}</textarea>
         {% else %}
-            <textarea class="w-full p-10 border border-neutral-800 text-lg resize-none" rows="30" cols="50" readonly></textarea>
+            <textarea class="w-full p-10 border border-neutral-800 text-lg resize-none" rows="13" cols="50" readonly></textarea>
         {% endif %}
     </div>
 </div>

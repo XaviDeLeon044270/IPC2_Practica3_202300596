@@ -1,18 +1,11 @@
+from controllers.ventascontroller import BlueprintVenta
 from flask import Flask
+from flask_cors import CORS
 
-class MyFlaskApp:
-    def __init__(self):
-        self.app = Flask(__name__)
-        self.setup_routes()
+app = Flask(__name__)
+cors = CORS(app)
 
-    def setup_routes(self):
-        @self.app.route('/')
-        def hello_world():
-            return 'Hola mundo'
-
-    def run(self):
-        self.app.run(debug=True)
+app.register_blueprint(BlueprintVenta)
 
 if __name__ == '__main__':
-    my_app = MyFlaskApp()
-    my_app.run()
+    app.run(host='localhost', port=5000, debug=True)
